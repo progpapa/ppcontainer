@@ -1,0 +1,28 @@
+<?php
+
+/**
+ * @file
+ * Main file for the container module.
+ */
+
+/**
+ * Intantiates a service container object.
+ *
+ * @param string $class
+ *   Name of the container class. The class should be defined in custom module.
+ *
+ * @return object
+ *   A service container object.
+ */
+function ppcontainer($class) {
+  if (method_exists($class, 'getInstance')) {
+    return $class::getInstance();
+  }
+  // Unable to instantiate the required container. Shouldn't usually happen.
+  $message = t('Unable to instantiate container. Class name: @class'
+      , array('@class' => $class));
+  watchdog('container', $message, NULL, WATCHDOG_ERROR);
+  if (user_access('administer site configuration')) {
+    drupal_set_message($message);
+  }
+}

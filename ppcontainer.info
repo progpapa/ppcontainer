@@ -1,0 +1,7 @@
+name = Service Container
+description = A simple service container
+package = custom
+core = 7.x
+
+files[] = inc/abstractppcontainer.inc
+
